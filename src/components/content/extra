@@ -1,0 +1,78 @@
+  {project &&
+          project.map((pro) => {
+            return (
+              <div key={pro.id}>
+                <p>{pro.id}</p>
+                <p>{pro.Keys}</p>
+              </div>
+            );
+          })}
+
+          jrpW6eQYlQk9tUaVCSKW
+
+Keys:12
+var pos = 0,
+      newpos = "",
+      newchar = "";
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    const key = this.state.key;
+    var newmsg = "";
+    const message = this.state.msg;
+    var i;
+    for (i = 0; i < message.length; i++) {
+      pos = alphabet.indexOf(message[i]);
+      newpos = (pos + key) % 26;
+      newchar = alphabet[newpos];
+      newmsg += newchar;
+    }
+
+    console.log(newmsg, this.state.key);
+  };
+export const createkey = (privates) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+    firestore
+    .collection("keyss")
+    .add({
+      ...privates,
+    })
+      .then(() => {
+        dispatch({
+          type: "ADD_KEY",
+          privates,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: "ADD_KEY_ERR",
+          privates,
+        });
+      });
+  };
+};
+export const display = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    const db = getFirebase().firestore();
+    db.collection("keyss")
+      .get()
+      .then((snap) => {
+        snap.forEach((doc) => {
+          console.log(doc.data());
+          console.log(doc.id);
+        });
+      });
+  };
+};
+
+ const db=getFirebase().firestore()//.doc("AkY1mYFTkW2Uc31UHo9G")
+    
+    var docRef=db.collection("keyss").where("content", "==", "first ever key to go")
+
+    docRef.get().then(function(doc){
+      if(!doc.exists){
+        console.log('no such')
+      }
+      else{
+        console.log(doc.data())
+      }
+    })
